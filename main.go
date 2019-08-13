@@ -25,8 +25,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"github.com/consbio/mbtileserver/handlers"
 	"github.com/consbio/mbtileserver/mbtiles"
+	"github.com/tysweezy/mbtileserver/handlers"
 )
 
 var (
@@ -245,6 +245,10 @@ func serve() {
 	e.GET("/*", h)
 	a := echo.WrapHandler(svcSet.ArcGISHandler(ef))
 	e.GET("/arcgis/rest/services/*", a)
+
+	// upload new map form
+	season := echo.WrapHandler(handlers.SeasonHandler(ef))
+	e.POST("/season/*", season)
 
 	// Start the server
 	fmt.Println("\n--------------------------------------")
