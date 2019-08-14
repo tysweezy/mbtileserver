@@ -246,9 +246,11 @@ func serve() {
 	a := echo.WrapHandler(svcSet.ArcGISHandler(ef))
 	e.GET("/arcgis/rest/services/*", a)
 
-	// upload new map form
-	season := echo.WrapHandler(handlers.SeasonHandler(ef))
+	season := echo.WrapHandler(svcSet.SeasonHandler(ef))
 	e.POST("/season/*", season)
+
+	reloadTiles := echo.WrapHandler(svcSet.RealodTilesHandler(ef))
+	e.GET("/reload/*", reloadTiles)
 
 	// Start the server
 	fmt.Println("\n--------------------------------------")

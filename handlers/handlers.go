@@ -65,24 +65,6 @@ func wrapGetWithErrors(ef func(error), hf handlerFunc) http.Handler {
 	})
 }
 
-func wrapPostWithErrors(ef func(error), hf handlerFunc) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "POST" {
-			status := http.StatusMethodNotAllowed
-			http.Error(w, http.StatusText(status), status)
-			return
-		}
-		status, err := hf(w, r) // run the handlerFunc and obtain the return codes
-		if err != nil && ef != nil {
-			ef(err) // handle the error with the supplied function
-		}
-		// in case it's an error, write the status code for the requester
-		if status >= 400 {
-			http.Error(w, http.StatusText(status), status)
-		}
-	})
-}
-
 // hmacAuth wraps handler functions to provide request authentication. If
 // -s/--secret-key is provided at startup, this function will enforce proper
 // request signing. Otherwise, it will simply pass requests through to the
