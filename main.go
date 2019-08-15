@@ -249,7 +249,7 @@ func serve() {
 	season := echo.WrapHandler(svcSet.SeasonHandler(ef))
 	e.POST("/season/*", season)
 
-	reloadTiles := echo.WrapHandler(svcSet.RealodTilesHandler(ef))
+	reloadTiles := echo.WrapHandler(svcSet.ReloadTilesHandler(ef))
 	e.GET("/reload/*", reloadTiles)
 
 	// Start the server

@@ -253,7 +253,7 @@ func (s *ServiceSet) SeasonHandler(ef func(error)) http.Handler {
 	return m
 }
 
-func (s *ServiceSet) RealodTilesHandler(ef func(error)) http.Handler {
+func (s *ServiceSet) ReloadTilesHandler(ef func(error)) http.Handler {
 	m := http.NewServeMux()
 
 	m.HandleFunc("/reload/tiles", s.reloadTiles)
